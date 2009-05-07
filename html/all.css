@@ -180,7 +180,6 @@ body.show-quiz     .tab.show-quiz {
 // ============================================================================ */
 
 .cbox {
-    x-width: 800px;
     border: 2px solid #462F39;
     margin: 10px 0;
     background-color: #F7E4AB;
@@ -202,14 +201,12 @@ body.show-quiz     .tab.show-quiz {
 // ============================================================================ */
 
 .qentry {
-    x-width: 800px;
-    x-border: 2px solid #462F39;
-    x-margin: 10px 0;
-    x-background-color: #F7E4AB;
+    padding-top: 3em !important;
 }
 
 .qtype {
     position: relative;
+    top: -3em;
 }
 
 .qtype-i {
@@ -220,8 +217,6 @@ body.show-quiz     .tab.show-quiz {
 }
 
 .qauthor {
-    margin-top: 3em;
-    x-border-top: 1px dotted #888;
     border-bottom: 1px dotted #888;
     text-align: right;
     padding: 0 10px 2px 0;

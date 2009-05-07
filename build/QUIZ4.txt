@@ -143,14 +143,14 @@ wurde, noch in Form von Arsenspiegeln sichtbar wurde."
 #A193A Chef vom Bund der Sieben
 Zola starb an Kohlengas
 
-#A193A Chef vom Bund der Sieben
+#A193B Chef vom Bund der Sieben
 Van Dusen berichtigt:  CO, also Kohlenmonoxid
 
-#A193A Chef vom Bund der Sieben
+#A193C Chef vom Bund der Sieben
 kirschrote Flecken im Gesichtsbereich sind die gewöhnlichen Anzeichen einer
 Kohlenmonoxid-Vergiftung.
 
-#A193A Chef vom Bund der Sieben
+#A193D Chef vom Bund der Sieben
 Dr. Pascal stellte den Totenschein aus
 
 #=======================================================================
@@ -2556,7 +2556,7 @@ Signor Rossi und Tony Exposito...
 #Q1267 M.A.
 Wie ihr alle wisst (denn das kann man gar nicht überhören), beschwört Hatch in Zeiten der Not
 eine rundliche Person um Beistand.
-An wen wendet sich dagegen Caruso?
+ An wen wendet sich dagegen Caruso?
 
 PS: Der Professor ist natürlich nicht gemeint...
 
@@ -2609,22 +2609,6 @@ sich das Blut nicht verflüssigt, so droht laut dem örtlichen Aberglauben eine Ka
 
 Interessant
  it.: Gennaro, von lat. Pförtner
-
-
-#=======================================================================
-#Q1280 jules2907
-San Gennaro (Ianuarius) ist der Schutzheilige von Neapel. Man sagt von ihm, dass sein getrocknetes
-Blut sich zweimal im Jahr auf wundersame Weise verflüssigt: An seinem Feiertag (19. September) und
-am ersten Samstag im Mai. Zu diesen Anlässen wird eine Phiole, die angeblich das getrocknete Blut
-des Heiligen enthält, aus der Kathedrale in Neapel entfernt und auf einer Prozession durch die
-Straßen der Stadt getragen. Früher wurden diese Rituale am 16. Dezember durchgeführt, &#8222;aber
-die Verflüssigung trat an diesen Tagen ziemlich selten ein &#8211; wohl auf die niedrigere
-Temperatur zurückzuführen &#8211; und so wurde dieser Brauch nicht fortgeführt" (Nickell). Wenn
-sich das Blut nicht verflüssigt, so droht laut dem örtlichen Aberglauben eine Katastrophe.
-
-Interessant
-it.: Gennaro, von lat. Pförtner
-
 
 #=======================================================================
 #Q1284 jules2907
@@ -3332,15 +3316,7 @@ Von "exzentrischen" Professoren spricht Lord Tilbury in "Im letzten
 Moment: PvD".
 
 #=======================================================================
-#Q1600 M.A.
-Genau der war gemeint 
-Damit wärst du dran - falls nicht von Knesewitz Anspruch anmeldet, weil der ja bei Carstens Frage
-auch 50% gelöst hatte und ich mich einfach ganz unsalomonisch, vielmehr dreist vorgedrängelt habe.
-
-#=======================================================================
 #Q1602 Von Rundstertz
-Ich nehme mal an, daß von Knesewitz nichts dagegen hat, wenn ich ein kleines und recht einfaches
-Rätsel in Gedichtform verfasse:
  Hutchinson Hatch, der hat´s recht schwer.
  Er ist nicht nur der Chronik Herr
  Und Assistent noch obendrein -
@@ -4115,12 +4091,6 @@ Vorbild für Hatch ist. Meine mich dunkel erinnern zu können, daß er das irgendwo
 aber leider auch nicht den Fall... 
 
 #=======================================================================
-#Q1907 Von Rundstertz
-Totalement correct!    La question prochaine est à vous, Monsieur Caprice!
-Cordialement
-von Rundstertz
-
-#=======================================================================
 #Q1908 Octave Caprice
 Widerspruch und Flapsigkeit muß der Professor sich ja des öfteren gefallen lassen ("reg dich ab,
 August!"). Doch, zumindest soweit mir bekannt, zweifelt in der ganzen van-Dusen-Chronik nur ein
@@ -4461,8 +4431,6 @@ Ich glaub die Schnepfen werden für König Edward gefüllt - mit ner Glycerin (schr
 Kapsel und noch allerlei Sachen, die ich aber nicht mehr weiß. Im Fall "Prof van Dusen und das
 Zeichen der 7".
 
-Waren's evt. Wachteln?
-
 #=======================================================================
 #Q2203 M.A.
 Im Fall "Professor van Dusen und das Phantom der Oper" geht es recht viel um Opern von Richard
@@ -4470,17 +4438,11 @@ Wagner. In welchem anderen Fall finden wir ein Zitat an eine berühmte Wagner-Ope
 So werf ich den Brand in Walhalls prangende Burg...
 
 #-----------------------------------------------------------------------
-#A2203 Octave Caprice
-Hoffend horchen die Hörer, harren des hilfreichen Hinweises... 
- lang wird's sonst dauern, bis sie es finden, frevelnd verborgen in zahlreichen Fällen van Dusens...
-
-#-----------------------------------------------------------------------
 #T2203 M.A.
 Oder auch finis XXX!
-Hatch ruft übrigens kurz vorher : Ach du dicker Vater!
+ Hatch ruft übrigens kurz vorher: Ach du dicker Vater!
 
-#=======================================================================
-#Q2209 blindbox
+#A2203 blindbox
 Der Götter bzw. des Phantoms Ende dämmert nun
 in "PvD und die 7 Detektive"
 
@@ -4874,9 +4836,7 @@ Alle Worte gesuchten Worte hintereinander gelesen ergeben das Dingelingen.
 Und dieses Dingelingen begegnet uns auch in einem Fall. Aber in welchem?
 
 #=======================================================================
-#Q2614 Carsten
-Hallo auch !
-Ein gutes Rätsel, das du dir ausgedacht hast, Susanne.
+#Q2610 Carsten
 Den ersten Teil konnte ich schon Lösen :
 - Computerbauteil = CHIP
 - internationale Schriftstellervereinigung = PEN
@@ -4885,22 +4845,22 @@ Den ersten Teil konnte ich schon Lösen :
 - amerikanischer Schauspieler mit Hang zur fernöstlicher Religion = GERE
 
 #-----------------------------------------------------------------------
-#T2614 Susanne
+#T2610 Susanne
 Auf der entschlüsselten Chippendaleetagere befindet sich ein Gegenstand, der damals in keinem guten
 Haushalt fehlen durfte. Heute hat so was kein Mensch mehr.
 
-#T2614 Susanne
+#T2610 Susanne
 die Chippendaleetagere befindet sich in Gesellschaft einer ausgesprochen amerikanischen Hausbar.
 
 #-----------------------------------------------------------------------
-#T2614 Susanne
+#T2610 Susanne
 In der Hoffnung, dass da draußen in der großen, weiten Welt noch jemand miträtselt, hier noch ein
 Tipp:
 neben der ausgesprochen amerikanischen Hausbar befindet sich auch ein Fläschchen Riechsalz bei der
 CHIPPENDALEETAGERE.
 
 #-----------------------------------------------------------------------
-#A2614 herbivore
+#A2610 herbivore
 ich habe heute zufällig "Van Dusens erster Fall" gehört und siehe da, dort taucht die
 Chippendaleetagere im Hause Denninger auf.
 

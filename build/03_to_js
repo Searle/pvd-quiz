@@ -10,7 +10,7 @@ use Data::Dumper;
     close FIN;
 }
 
-%q= {};
+%q= ();
 
 $data =~ s/^[ ]+/\n/gm;
 $data =~ s/^-[ ]+/\n-/gm;
@@ -30,7 +30,6 @@ for (split(/\n/, $data)) {
         }
         else {
             die "Antwort auf nicht existierende Frage: $type$no\n: $_" unless $q{$no};
-
             push @{ $q{$no} }, [ $type, $author, [] ];
         }
         next;
@@ -41,8 +40,10 @@ for (split(/\n/, $data)) {
 }
 
 for (keys %q) {
-    next unless @#{ $q{$_} };
-    print "Keine Antwort auf for $_!\n" if @#{ $q{$_} };
+    @a= @{ $q{$_} };
+    next if $#a > 0;
+
+    print "Keine Antwort auf for $_! ($#a)\n";
     $err= 1;
 }
 die if $err;

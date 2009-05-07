@@ -30,6 +30,7 @@ jQuery(function($) {
                 var qpart=     qparts[qpart_i];
                 var qptype=    qpart[0];
                 var qpcontent= qpart[1];
+                qpcontent= qpcontent.replace(/\b(http:\/\/\S+)/, '<a target="_blank" href="$1">$1</a>');
                 var class_= '';
                 if (qptype == '-') class_= ' class="li"';
                 qcontent.push('<p', class_, '>', qpcontent, '</p>'); 
@@ -72,7 +73,7 @@ jQuery(function($) {
             actionHtml.push('</div>');
             actionHtml= actionHtml.join('');
             if (qentry_i == 0) {
-                return asHtml(navHtml, '&nbsp;', '<p>Viel Spa&szlig; beim Raten!</p><p>Mit "Leerzeichen"-Taste geht\'s zum n&auml;chsten Tip / Antwort!</p>', actionHtml);
+                return asHtml(navHtml, '&nbsp;', '<p>Viel Spa&szlig; beim Raten!</p><p>Mit "Leerzeichen"-Taste geht\'s zum n&auml;chsten Tip bzw. zur n&auml;chsten Antwort!</p>', actionHtml);
             }
             var qentry= entries[qentry_i];
             return asHtml(navHtml, qentry[1], qentry[2], actionHtml);
@@ -433,7 +434,7 @@ jQuery(function($) {
     };
 
     cmds.user_remove= function(params) {
-        if (parseInt(params.kcount) && !confirm("Wirklich l&ouml;schen?")) return;
+        if (parseInt(params.kcount) && !confirm("Wirklich loeschen?")) return;
 
         users.remove(params.id);
         users.updateList();

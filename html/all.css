@@ -1,9 +1,10 @@
 
 /*  Palette:
-    Light: #F7E4AB;
-    Red:   #841815;
-    Old:   #462F39;
-    Crawl: #36382B;
+    Light:  #F7E4AB;
+    Medium: #DEB476;
+    Red:    #841815;
+    Old:    #462F39;
+    Crawl:  #36382B;
 */
 
 html {
@@ -41,6 +42,25 @@ a.big {
     font-size: 150%;
 }
 
+table.std {
+    margin: 10px 0px 20px 0;
+    border-collapse: collapse;
+    border: 0;
+}
+
+table.std th, table.std td {
+    border: 1px dotted #CB9F5B;
+    border-left: 0px;
+    border-right: 0px;
+    padding: 5px 15px;
+}
+
+table.std th {
+    border-top-width: 0;
+    border-bottom-style: solid;
+    x-background-color: #CB9F5B;
+}
+
 #head {
     background-color: #462F39;
     color: #FFF;
@@ -60,7 +80,7 @@ a.big {
 #head .tab {
     position: relative;
     border-top: 1px solid black;
-    background-color: #F7E4AB;
+    background-color: #DEB476;
     color: #000;
     padding: 10px 20px 20px 20px;
     cursor: pointer;
@@ -94,10 +114,12 @@ a.big {
 
 .cbox h1, .cbox > div {
     margin: 0;
-    padding: 0 10px;
+    padding: 0 20px;
 }
 
 .cbox h1 {
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .qentry {

@@ -308,6 +308,7 @@ jQuery(function($) {
         };
 
         var nextA= function() {
+            if (q == null) return 0;
             answer_i= answer_i >= q.getEntryCount() - 1 ? 0 : answer_i + 1;
             return answer_i;
         };
@@ -506,12 +507,18 @@ jQuery(function($) {
     };
 
     var startGame= function(playerIds) {
+        game= new Game(users, playerIds);
+        if (game.getQ() == null) {
+            error("Es gibt keine Fragen mehr, die die ausgew&auml;hlten Mitspieler nicht schon beantwortet h&auml;tten!");
+            return false;
+        }
+
         $('body').addClass('game-running');
         $('#tab-quiz').removeClass('disabled');
-        game= new Game(users, playerIds);
         users.setGame(game);
         updateQuizUi();
         showPage('quiz');
+        return true;
     };
 
     var stopGame= function() {

@@ -12,37 +12,18 @@ use Data::Dumper;
 
 %q= {};
 
-for (split(/\n/, "$data\n")) {
+$data =~ s/^[ ]+/\n/gm;
+$data =~ s/^-[ ]+/\n-/gm;
+$data =~ s/^#(.*?)$/\n#$1\n/gm;
+$data =~ s/^#[-=](.*?)$/\n/gm;
+$data =~ s/\n(?!\n)/ /g;
+$data =~ s/^\s+//gm;
+$data =~ s/[ ][ ]+/ /g;
 
-    s/\s+$//;
+for (split(/\n/, $data)) {
+    if (/^#(.)(\S+)\s+(.*)/) {
 
-    if (/^$/) {
-        $nl= 1;
-        next;
-    }
-
-    next if /^#[-=]/;
-
-    $type= undef;
-    $ctype= undef;
-
-    $nl= 1 if s/^\s+//;
-    ($nl, $ctype)= (1, '-') if s/^[-]\s*//;
-
-    ($nl, $type, $no, $author)= (1, $1, $2, $3) if /^#(.)(\S+)\s+(.*)/;
-
-    if ($nl && $line) {
-        $line =~ s/\s\s+/ /g;
-
-        die Dumper(\%q) . "[$curno?]" unless @{ $q{$curno} }->[-1][2];
-        push @{ @{ $q{$curno} }->[-1][2] }, [ $ctype, $line ];
-
-        $nl= 0;
-        $line= '';
-    }
-
-    if ($type) {
-        $curno= $no;
+        ($type, $no, $author)= ($1, $2, $3);
 
         if ($type eq 'Q') {
             $q{$no}= [[ $type, $author, [] ]];
@@ -52,13 +33,19 @@ for (split(/\n/, "$data\n")) {
 
             push @{ $q{$no} }, [ $type, $author, [] ];
         }
-        $nl= 0;
         next;
     }
 
-    $line .= ' ' if $line;
-    $line .= $_;
+    $ctype= s/^([-])\s*// ? $1 : undef;
+    push @{ @{ $q{$no} }->[-1][2] }, [ $ctype, $_ ];
 }
+
+for (keys %q) {
+    next unless @#{ $q{$_} };
+    print "Keine Antwort auf for $_!\n" if @#{ $q{$_} };
+    $err= 1;
+}
+die if $err;
 
 use JSON::XS;
 

@@ -520,8 +520,8 @@ meinerseits!
 #-----------------------------------------------------------------------
 #A436 miesegestalt
 1. Hinterlader und Feldkanonen zur Modernisierung der Armee
-2. USA
-3. Rubine, Smaragde, Diamanten und Jade (zwei große Lederbeutel voll)
+ 2. USA
+ 3. Rubine, Smaragde, Diamanten und Jade (zwei große Lederbeutel voll)
 
 #=======================================================================
 #Q441 miesegestalt
@@ -4657,8 +4657,7 @@ Evt auch:
 #=======================================================================
 #Q2383 von Knesewitz
 
-Gut, dann versuche ich es mal mit der folgenden Suche:
- Wir suchen nach einer männlichen Person, wir stoßen in einem der Fälle auf diese, welche laut der
+Wir suchen nach einer männlichen Person, wir stoßen in einem der Fälle auf diese, welche laut der
 uns allgemein zur Verfügung stehenden Quellen als sehr schonungslos, grausam, triebhaft und
 verschwenderisch beschrieben wird. So wird er aber auch als depressiv und von einer Nervenschwäche
 bzw. von einer somatoformen Störung geplagt beschrieben, der eine gewisse Leidenschaft für

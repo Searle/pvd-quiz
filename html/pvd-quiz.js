@@ -218,6 +218,10 @@ jQuery(function($) {
             return qids;
         };
 
+        var setSolved= function(user_id, qid) {
+            db.execute('INSERT INTO solved (user_id, qid) VALUES (?, ?)', user_id, qid);
+        };
+
         var updateList= function() {
             var users= getAll();
             var html= [];            
@@ -263,6 +267,7 @@ jQuery(function($) {
         this.updateList= updateList;
         this.setGame= setGame;
         this.getUnsolvedQids= getUnsolvedQids;
+        this.setSolved= setSolved;
         return this;
     };
 
@@ -275,17 +280,26 @@ jQuery(function($) {
         var q;
         var qids= users.getUnsolvedQids(playerIds);
         var answer_i;
+        var players;
 
 //        var getPlayerIds= function() {
 //            return playerIds;
 //        };
 
+        players= [];
+        for (var i in playerIds) {
+            var player= users.getById(playerIds[i]);
+            player.game_solved_count= 0;
+            players[playerIds[i]]= player;
+        }
+
+        var setSolved= function(user_id, qid) {
+            players[user_id].game_solved_count++;
+            users.setSolved(user_id, qid);
+        };
+
         var getPlayers= function() {
-            var result= {};
-            for (var i in playerIds) {
-                result[playerIds[i]]= users.getById(playerIds[i]);
-            }
-            return result;
+            return players;
         };
 
         var getQid= function() {
@@ -333,8 +347,9 @@ jQuery(function($) {
         this.getA= getA;
         this.nextQ= nextQ;
         this.nextA= nextA;
-        this.getQid= getQid;
+        // this.getQid= getQid;
         this.getQCount= getQCount;
+        this.setSolved= setSolved;
         return this;
     };
 
@@ -452,6 +467,7 @@ jQuery(function($) {
     };
 
     cmds.page_overview= function(params) {
+        users.updateList();
         showPage('overview');
     };
 
@@ -460,7 +476,8 @@ jQuery(function($) {
     };
 
     cmds.q_solved= function(params) {
-        if (params.uid) {
+        if (parseInt(params.uid)) {
+            game.setSolved(params.uid, params.qid);
         }
         game.nextQ();
         updateQuizUi();
@@ -478,6 +495,13 @@ jQuery(function($) {
     var updateQuizUi= function() {
         $('#qentryq').html(game.getQ().getEntryHtml(0));
         $('#qentrya').html(game.getQ().getAnswerHtml(game, game.getA()));
+        var players= game.getPlayers();
+        var html= [ "Q's: ", game.getQCount() ];
+        for (var i in players) {
+            var player= players[i];
+            html.push(", ", player.name, ":&nbsp;", player.game_solved_count);
+        }
+        $('#score').html(html.join(''));
     };
 
     var startGame= function(playerIds) {

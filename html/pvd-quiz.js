@@ -231,14 +231,31 @@ jQuery(function($) {
         return this;
     };
 
-    $('.checkbox-inside').live('click', function(ev) {
-        if (ev.target.tagName == 'INPUT') return true;
-        $('input[type=checkbox]', this).click();
-        return false;
-    });
+    // ========================================================================
+    //   Game class
+    // ========================================================================
+
+    var Game= function(playerIds) {
+
+        var getPlayerIds= function() {
+            return playerIds;
+        };
+
+        var getPlayers= function() {
+            var result= {};
+            for (var i in playerIds) {
+                result[playerIds[i]]= users.getById(playerIds[i]);
+            }
+            return result;
+        };
+
+        // this.getPlayerIds= getPlayerIds;
+        this.getPlayers= getPlayers;
+        return this;
+    };
 
     // ========================================================================
-    //   Event handler
+    //   DOM Events handler
     // ========================================================================
 
     var cmds= {};
@@ -272,8 +289,14 @@ jQuery(function($) {
         return false;
     });
 
+    $('.checkbox-inside').live('click', function(ev) {
+        if (ev.target.tagName == 'INPUT') return true;
+        $('input[type=checkbox]', this).click();
+        return false;
+    });
+
     // ========================================================================
-    //   Click Events
+    //   Global functions
     // ========================================================================
 
     var error= function(message) {
@@ -284,6 +307,10 @@ jQuery(function($) {
             .replace(/&([aouAOU])uml;/g, function(match, sub1) { return sub1 + 'e'; })
             + "!");
     };
+
+    // ========================================================================
+    //   Click Events
+    // ========================================================================
 
     cmds.user_add= function(params) {
         var name= $('#' + params.input).val().replace(/^\s+/, '').replace(/\s+$/, '').replace(/[^a-zA-Z0-9 ]+/g, '');
@@ -329,24 +356,9 @@ jQuery(function($) {
         stopGame();
     };
 
-    var Game= function(playerIds) {
-
-        var getPlayerIds= function() {
-            return playerIds;
-        };
-
-        var getPlayers= function() {
-            var result= {};
-            for (var i in playerIds) {
-                result[playerIds[i]]= users.getById(playerIds[i]);
-            }
-            return result;
-        };
-
-        // this.getPlayerIds= getPlayerIds;
-        this.getPlayers= getPlayers;
-        return this;
-    };
+    // ========================================================================
+    //   MAIN
+    // ========================================================================
 
     var startGame= function(playerIds) {
         $('body').addClass('game-running');
@@ -359,15 +371,6 @@ jQuery(function($) {
         game= null;
         users.setGame(game);
     };
-    
-
-    function updateUi() {
-//        if (game) {
-    };
-
-    // ========================================================================
-    //   MAIN
-    // ========================================================================
 
     var db= new Db();
     var qs= new Qs();
@@ -395,6 +398,5 @@ jQuery(function($) {
     $('#qentryq').html(q.getEntryHtml(0));
     entry_n= -1;
     nextA();
-
 
 });

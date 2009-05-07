@@ -19,14 +19,27 @@
     <div id="head"><div id="head-i">
         PvD-Quiz
         <span class="tabs">
-            <span class="tab active" id="tab-overview"><span class="tab-i">&Uuml;bersicht</span></span>
-            <span class="tab" id="tab-quiz"><span class="tab-i">Quiz</span></span>
+            <span class="tab active" id="tab-overview">&Uuml;bersicht</span>
+            <span class="tab" id="tab-quiz">Quiz</span>
         </span>
     </div></div>
     <div id="body">
-        <div id="qnav"></div>
-        <div id="qentryq"></div>
-        <div id="qentrya"></div>
+        <div class="page active" id="page-overview">
+            <div class="cbox" id="names">
+                <h1>Spieler</h1>
+                <div id="users"></div>
+                <div>
+                    <input id="new-user-name" /> <a href="#user_add:input=new-user-name">Hinzuf&uuml;gen</a>
+                </div>
+                <div class="actions">
+                    <a href="#add">Neue Spielerin / neue Spieler</a>
+                </div>
+            </div>
+        </div>
+        <div class="page" id="page-quiz">
+            <div class="cbox" id="qentryq"></div>
+            <div class="cbox" id="qentrya"></div>
+        </div>
     </div>
 </body>
 </html>

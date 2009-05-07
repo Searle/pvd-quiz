@@ -40,26 +40,51 @@ body {
 #head .tab {
     position: relative;
     border-top: 1px solid black;
-    x-background-image: url(bg.png);
     background-color: #F7E4AB;
     color: #000;
     padding: 10px 20px 20px 20px;
-    x-margin: 10px 0;
-}
-
-#head .tab-i {
-    x-padding-bottom: 20px;
+    cursor: pointer;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-topleft: 10px;
+    -webkit-border-radius-topright: 10px;
+    -webkit-border-radius-topleft: 10px;
+    border-radius-topright: 10px;
+    border-radius-topleft: 10px;
 }
 
 #head .tab.active {
     background-image: url(bg.png);
 }
 
-.qentry {
+#body .page {
+    display: none;
+}
+
+#body .page.active {
+    display: inherit;
+}
+
+.cbox {
     x-width: 800px;
     border: 2px solid #462F39;
     margin: 10px 0;
     background-color: #F7E4AB;
+    padding-bottom: 20px;
+}
+
+.cbox h1, .cbox > div {
+    margin: 0;
+    padding: 0 10px;
+}
+
+.cbox h1 {
+}
+
+.qentry {
+    x-width: 800px;
+    x-border: 2px solid #462F39;
+    x-margin: 10px 0;
+    x-background-color: #F7E4AB;
 }
 
 .qtype {

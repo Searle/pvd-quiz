@@ -1,8 +1,96 @@
 
-/* TBD */
+/*  Palette:
+    Light: #F7E4AB;
+    Red:   #841815;
+    Old:   #462F39;
+    Crawl: #36382B;
+*/
+
+html {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+body {
+    background-image: url(bg.png);
+    font-family: Georgia, "Century Schoolbook L", "Times New Roman", Times;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    x-padding-bottom: 1px;
+}
+
+#head {
+    background-color: #462F39;
+    color: #FFF;
+    padding: 20px;
+    x-border-bottom: 1px solid #F7E4AB;
+}
+
+#head-i, #body {
+    width: 800px;
+    margin: 0px auto;
+}
+
+#head .tabs {
+    padding: 0 20px;
+}
+
+#head .tab {
+    position: relative;
+    border-top: 1px solid black;
+    x-background-image: url(bg.png);
+    background-color: #F7E4AB;
+    color: #000;
+    padding: 10px 20px 20px 20px;
+    x-margin: 10px 0;
+}
+
+#head .tab-i {
+    x-padding-bottom: 20px;
+}
+
+#head .tab.active {
+    background-image: url(bg.png);
+}
 
 .qentry {
-    width: 600px;
-    margin: auto;
-    border: 1px solid black;
+    x-width: 800px;
+    border: 2px solid #462F39;
+    margin: 10px 0;
+    background-color: #F7E4AB;
+}
+
+.qtype {
+    position: relative;
+}
+
+.qtype-i {
+    position: absolute;
+    font-size: 400%;
+    color: #888;
+    padding: 10px;
+}
+
+.qauthor {
+    margin-top: 3em;
+    x-border-top: 1px dotted #888;
+    border-bottom: 1px dotted #888;
+    text-align: right;
+    padding: 0 10px 2px 0;
+}
+
+.qcontent {
+    padding: 10px;
+    font-size: 150%;
+}
+
+.qtype-nav.active, .qtype-nav.other {
+    padding-right: 10px;
+}
+
+.qtype-nav.active {
+    color: #841815;
+    padding-right: 10px;
 }

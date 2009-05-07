@@ -119,11 +119,14 @@ jQuery(function($) {
         db.execute('CREATE TABLE IF NOT EXISTS user_data ('
             + '  user_id INTEGER PRIMARY KEY, name TEXT'
             + ')');
-        db.execute('CREATE TABLE IF NOT EXISTS known ('
+        db.execute('CREATE TABLE IF NOT EXISTS q ('
+            + '  qid TEXT PRIMARY KEY'
+            + ')');
+        db.execute('CREATE TABLE IF NOT EXISTS solved ('
             + '  user_id INTEGER, qid TEXT'
             + ')');
         db.execute('CREATE VIEW IF NOT EXISTS user AS'
-            + '  SELECT *, (SELECT COUNT(*) FROM known WHERE known.user_id = user_data.user_id) AS known_count FROM user_data'
+            + '  SELECT *, (SELECT COUNT(*) FROM solved WHERE solved.user_id = user_data.user_id) AS solved_count FROM user_data'
             + '');
 
         var arguments2array= function(args, skip) {
@@ -160,6 +163,13 @@ jQuery(function($) {
             return result.length ? result[0] : null;
         };
 
+        if (!fetchOne("SELECT COUNT(*) AS c FROM q").c) {
+            console.log("Building Q cache");
+            for (var qid in quiz) {
+                execute("INSERT INTO q (qid) VALUES(?)", qid);
+            }
+        }
+
         // Public methods
         this.fetch= fetch;
         this.fetchOne= fetchOne;
@@ -188,7 +198,7 @@ jQuery(function($) {
 
         var remove= function(userId) {
             db.execute('DELETE FROM user_data WHERE user_id = ?', userId);
-            db.execute('DELETE FROM known WHERE user_id = ?', userId);
+            db.execute('DELETE FROM solved WHERE user_id = ?', userId);
         };
 
         var getAll= function() {
@@ -198,6 +208,14 @@ jQuery(function($) {
         var setGame= function(game_) {
             game= game_;
             updateList();
+        };
+
+        var getUnsolvedQids= function(userIds) {
+            var in_= userIds.join(',').replace(/\d+/g, '?');
+            var result= db.fetch('SELECT * FROM q WHERE (qid NOT IN (SELECT qid FROM solved WHERE user_id IN (' + in_ + ')))', userIds);
+            var qids= [];
+            for (var i in result) qids.push(result[i].qid);
+            return qids;
         };
 
         var updateList= function() {
@@ -226,9 +244,9 @@ jQuery(function($) {
                 html.push('<tr class="' + tr_class + '">',
                     '<td class="checkbox-inside"><input type="checkbox" id="' + cb_id + '"' + cb_attr + ' /></td>',
                     '<td>', user.name, '</td>',
-                    '<td>', user.known_count, '</td>',
-                    '<td>', Math.floor(1000 * user.known_count / qs.getCount()) / 10, '%</td>',
-                    '<td><a class="' + a_class + '" href="#user_remove:id=', user.user_id, ':kcount=', user.known_count, '">L&ouml;schen</a></td>',
+                    '<td>', user.solved_count, '</td>',
+                    '<td>', Math.floor(1000 * user.solved_count / qs.getCount()) / 10, '%</td>',
+                    '<td><a class="' + a_class + '" href="#user_remove:id=', user.user_id, ':kcount=', user.solved_count, '">L&ouml;schen</a></td>',
                     '</tr>');
             }
             $('#users').html('<table class="std">' + html.join('') + '</table>');
@@ -244,6 +262,7 @@ jQuery(function($) {
         this.remove= remove;
         this.updateList= updateList;
         this.setGame= setGame;
+        this.getUnsolvedQids= getUnsolvedQids;
         return this;
     };
 
@@ -251,11 +270,15 @@ jQuery(function($) {
     //   Game class
     // ========================================================================
 
-    var Game= function(playerIds) {
+    var Game= function(users, playerIds) {
+        var qid;
+        var q;
+        var qids= users.getUnsolvedQids(playerIds);
+        var answer_i;
 
-        var getPlayerIds= function() {
-            return playerIds;
-        };
+//        var getPlayerIds= function() {
+//            return playerIds;
+//        };
 
         var getPlayers= function() {
             var result= {};
@@ -265,8 +288,53 @@ jQuery(function($) {
             return result;
         };
 
+        var getQid= function() {
+            return qid;
+        };
+
+        var getQ= function() {
+            return q;
+        };
+
+        var nextQ= function() {
+            if (qids.length == 0) {
+                qid= -1;
+                q= null;
+            }
+            else {
+                var n= Math.floor(Math.random() * qids.length);
+                qid= qids.splice(n, 1);
+                if ($.isArray(qid)) qid[0];  // I remotely remember a JS bug with splice returning a scalar instead of an array...
+                q= new Q(qid);
+            }
+            answer_i= -1;
+            return q;
+        };
+
+        var nextA= function() {
+            answer_i= answer_i >= q.getEntryCount() - 1 ? 0 : answer_i + 1;
+            return answer_i;
+        };
+
+        var getA= function() {
+            return answer_i;
+        };
+
+        var getQCount= function() {
+            return qids.length;
+        };
+
+        nextQ();
+        nextA();
+
         // this.getPlayerIds= getPlayerIds;
         this.getPlayers= getPlayers;
+        this.getQ= getQ;
+        this.getA= getA;
+        this.nextQ= nextQ;
+        this.nextA= nextA;
+        this.getQid= getQid;
+        this.getQCount= getQCount;
         return this;
     };
 
@@ -395,11 +463,22 @@ jQuery(function($) {
     //   MAIN
     // ========================================================================
 
+    var db= new Db();
+    var qs= new Qs();
+    var users= new Users(db, qs);
+    var game;
+
+    var updateQuizUi= function() {
+        $('#qentryq').html(game.getQ().getEntryHtml(0));
+        $('#qentrya').html(game.getQ().getAnswerHtml(game, game.getA()));
+    };
+
     var startGame= function(playerIds) {
         $('body').addClass('game-running');
         $('#tab-quiz').removeClass('disabled');
-        game= new Game(playerIds);
+        game= new Game(users, playerIds);
         users.setGame(game);
+        updateQuizUi();
         showPage('quiz');
     };
 
@@ -410,31 +489,13 @@ jQuery(function($) {
         users.setGame(game);
     };
 
-    var db= new Db();
-    var qs= new Qs();
-    var users= new Users(db, qs);
-    var game;
-
-    var qid= "1169";
-    var q= qs.getQ(qid);
-    var entry_n= 1;
-
     $('.quiz-count').html(qs.getCount());
-
-    var nextA= function() {
-        entry_n= entry_n >= q.getEntryCount() - 1 ? 0 : entry_n + 1;
-        $('#qentrya').html(q.getAnswerHtml(game, entry_n));
-    };
 
     $(document)
         .bind('keydown', 'space', function(evt) {
-            nextA();
+            game.nextA();
+            updateQuizUi();
             return false; // don't bubble
         })
     ;
-
-    $('#qentryq').html(q.getEntryHtml(0));
-    entry_n= -1;
-    nextA();
-
 });

@@ -15,16 +15,16 @@
     <script language="javascript" src="pvd-quiz-data.js"></script>
     <script language="javascript" src="pvd-quiz.js"></script>
 </head>
-<body>
+<body class="show-overview">
     <div id="head"><div id="head-i">
         PvD-Quiz
         <span class="tabs">
-            <span class="tab active" id="tab-overview">&Uuml;bersicht</span>
-            <span class="tab" id="tab-quiz">Quiz</span>
+            <span class="tab link-inside show-overview" id="tab-overview"><a href="#page_overview">&Uuml;bersicht</a></span>
+            <span class="tab link-inside show-quiz" id="tab-quiz"><a href="#page_quiz">Quiz</a></span>
         </span>
     </div></div>
     <div id="body">
-        <div class="page active" id="page-overview">
+        <div class="page show-overview" id="page-overview">
             <div class="cbox" id="quiz-cbox">
                 <h1>Willkommen zum PvD-Quiz!</h1>
                 <div>
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div class="page" id="page-quiz">
+        <div class="page show-quiz" id="page-quiz">
             <div class="cbox" id="qentryq"></div>
             <div class="cbox" id="qentrya"></div>
         </div>

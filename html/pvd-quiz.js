@@ -295,6 +295,12 @@ jQuery(function($) {
         return false;
     });
 
+    $('.link-inside').live('click', function(ev) {
+        if (ev.target.tagName == 'A') return true;
+        $('a', this).click();
+        return false;
+    });
+
     // ========================================================================
     //   Global functions
     // ========================================================================
@@ -354,6 +360,14 @@ jQuery(function($) {
 
     cmds.quiz_stop= function(params) {
         stopGame();
+    };
+
+    cmds.page_overview= function(params) {
+        $('body').removeClass('show-quiz').addClass('show-overview');
+    };
+
+    cmds.page_quiz= function(params) {
+        $('body').removeClass('show-overview').addClass('show-quiz');
     };
 
     // ========================================================================

@@ -22,6 +22,10 @@ body {
     x-padding-bottom: 1px;
 }
 
+/* ============================================================================
+//      Links
+// ============================================================================ */
+
 a {
     border: 1px solid #462F39;
     -moz-border-radius: 5px;
@@ -52,6 +56,10 @@ a.disabled:hover {
     background-color: #CCC;
 }
 
+/* ============================================================================
+//      Tables of class "std"
+// ============================================================================ */
+
 table.std {
     margin: 10px 0px 20px 0;
     border-collapse: collapse;
@@ -69,21 +77,47 @@ table.std .hilight td, table.std .hilight th {
     background-color: #DEB476;
 }
 
-body .game-running {
-    display: none;
-}
-body.game-running .game-running {
-    display: inherit;
-}
-body.game-running .game-stopped {
-    display: none;
-}
-
 table.std th {
     border-top-width: 0;
     border-bottom-style: solid;
     x-background-color: #CB9F5B;
 }
+
+/* ============================================================================
+//      State "game-*"
+// ============================================================================ */
+
+body .game-running,
+body.game-running .game-stopped {
+    display: none;
+}
+
+body.game-running .game-running {
+    display: inherit;
+}
+
+/* ============================================================================
+//      State "page-*"
+// ============================================================================ */
+
+body .page.show-overview,
+body .page.show-quiz {
+    display: none;
+}
+
+body.show-overview .page.show-overview,
+body.show-quiz     .page.show-quiz {
+    display: inherit;
+}
+
+body.show-overview .tab.show-overview,
+body.show-quiz     .tab.show-quiz {
+    background-image: url(bg.png);
+}
+
+/* ============================================================================
+//      Head
+// ============================================================================ */
 
 #head {
     background-color: #462F39;
@@ -116,17 +150,22 @@ table.std th {
     border-radius-topleft: 10px;
 }
 
+#head .tab a {
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/* unused:
 #head .tab.active {
     background-image: url(bg.png);
 }
+*/
 
-#body .page {
-    display: none;
-}
-
-#body .page.active {
-    display: inherit;
-}
+/* ============================================================================
+//      Content boxes
+// ============================================================================ */
 
 .cbox {
     x-width: 800px;
@@ -145,6 +184,10 @@ table.std th {
     margin-top: 10px;
     margin-bottom: 20px;
 }
+
+/* ============================================================================
+//      Quiz content
+// ============================================================================ */
 
 .qentry {
     x-width: 800px;
@@ -185,3 +228,7 @@ table.std th {
     color: #841815;
     padding-right: 10px;
 }
+
+/* ============================================================================
+//      EOF
+// ============================================================================ */

@@ -30,17 +30,19 @@
                 <div>
                     Es gibt <span class="quiz-count">?</span> Fragen zu knacken!
                 </div>
-                <div id="quiz-overview"></div>
             </div>
             <div class="cbox" id="names">
                 <h1>Spieler</h1>
-                <div>
+                <div class="game-stopped">
                     Neu: <input id="new-user-name" />
                     <a href="#user_add:input=new-user-name">Hinzuf&uuml;gen</a>
                 </div>
                 <div id="users"></div>
-                <div>
+                <div class="game-stopped">
                     <a class="big" href="#quiz_start">Los geht's!</a>
+                </div>
+                <div class="game-running">
+                    <a class="big" href="#quiz_stop">Spiel beenden!</a>
                 </div>
             </div>
         </div>

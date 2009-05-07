@@ -42,6 +42,16 @@ a.big {
     font-size: 150%;
 }
 
+a.disabled {
+    border-color: #888;
+    color: #888;
+    background-color: #CCC;
+}
+
+a.disabled:hover {
+    background-color: #CCC;
+}
+
 table.std {
     margin: 10px 0px 20px 0;
     border-collapse: collapse;
@@ -53,6 +63,20 @@ table.std th, table.std td {
     border-left: 0px;
     border-right: 0px;
     padding: 5px 15px;
+}
+
+table.std .hilight td, table.std .hilight th {
+    background-color: #DEB476;
+}
+
+body .game-running {
+    display: none;
+}
+body.game-running .game-running {
+    display: inherit;
+}
+body.game-running .game-stopped {
+    display: none;
 }
 
 table.std th {

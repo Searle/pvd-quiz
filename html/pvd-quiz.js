@@ -156,9 +156,14 @@ jQuery(function($) {
     // ========================================================================
 
     var Users= function(db, qs) {
+        var game;
 
         var getByName= function(name) {
             return db.fetchOne('SELECT * FROM user WHERE name = ?', name);
+        };
+
+        var getById= function(id) {
+            return db.fetchOne('SELECT * FROM user WHERE user_id = ?', id);
         };
 
         var add= function(name) {
@@ -174,10 +179,15 @@ jQuery(function($) {
             return db.fetch('SELECT * FROM user ORDER BY name');
         };
 
+        var setGame= function(game_) {
+            game= game_;
+            updateList();
+        };
+
         var updateList= function() {
             var users= getAll();
             var html= [];            
-
+            var players= game ? game.getPlayers() : {};
             html.push('<tr>',
                 '<th>Spielt mit?</th>',
                 '<th>Name</th>',
@@ -187,13 +197,22 @@ jQuery(function($) {
                 '</tr>');
             for (var user_i in users) {
                 var user= users[user_i];
-                var chid= 'user' + user.user_id + '_plays';
-                html.push('<tr>',
-                    '<td class="checkbox-inside"><input type="checkbox" id="' + chid + '" /></td>',
+                var cb_id= 'user' + user.user_id + '_plays';
+                var cb_attr= '';
+                var a_class= '';
+                var tr_class= '';
+                if (game) {
+                    if (!players[user.user_id]) continue;
+                    cb_attr=  ' disabled="true" checked="true"';
+                    a_class=  'disabled';
+                    tr_class= 'hilight';
+                }
+                html.push('<tr class="' + tr_class + '">',
+                    '<td class="checkbox-inside"><input type="checkbox" id="' + cb_id + '"' + cb_attr + ' /></td>',
                     '<td>', user.name, '</td>',
                     '<td>', user.known_count, '</td>',
                     '<td>', Math.floor(1000 * user.known_count / qs.getCount()) / 10, '%</td>',
-                    '<td><a href="#user_remove:id=', user.user_id, ':kcount=', user.known_count, '">L&ouml;schen</a></td>',
+                    '<td><a class="' + a_class + '" href="#user_remove:id=', user.user_id, ':kcount=', user.known_count, '">L&ouml;schen</a></td>',
                     '</tr>');
             }
             $('#users').html('<table class="std">' + html.join('') + '</table>');
@@ -203,10 +222,12 @@ jQuery(function($) {
 
         // Public methods
         this.getByName= getByName;
+        this.getById= getById;
         this.getAll= getAll;
         this.add= add;
         this.remove= remove;
         this.updateList= updateList;
+        this.setGame= setGame;
         return this;
     };
 
@@ -227,6 +248,7 @@ jQuery(function($) {
     $('a').live('click', function() {
         console.log("Clicked:", $(this).attr('href'));
 
+        if ($(this).hasClass('disabled')) return;
         var href= $(this).attr('href');
 
         // Not an internal link, pass on to browser
@@ -264,7 +286,7 @@ jQuery(function($) {
     };
 
     cmds.user_add= function(params) {
-        var name= $('#' + params.input).val().replace(/^s+/, '').replace(/\s+$/, '').replace(/[^a-zA-Z0-9 ]+/g, '');
+        var name= $('#' + params.input).val().replace(/^\s+/, '').replace(/\s+$/, '').replace(/[^a-zA-Z0-9 ]+/g, '');
         if (!name) {
             error("Name darf weder leer sein noch aus seltsamen Zeichen bestehen");
             return;
@@ -275,7 +297,7 @@ jQuery(function($) {
         }
         $('#new-user-name').val('');
         users.add(name);
-        users.updateList();
+        users.updateList(game);
     };
 
     cmds.user_remove= function(params) {
@@ -291,24 +313,53 @@ jQuery(function($) {
             error("Bitte erst Spieler anlegen");
             return;
         }
-        var players= [];
+        var playerIds= [];
         for (var i in userlist) {
             var user= userlist[i];
-            if ($('#user' + user.user_id + '_plays').attr('checked')) players.push(user.user_id);
+            if ($('#user' + user.user_id + '_plays').attr('checked')) playerIds.push(user.user_id);
         }
-        if (players.length == 0) {
+        if (playerIds.length == 0) {
             error("Bitte erst Mitspieler ausw&auml;hlen");
             return;
         }
-        game= new Game(players);
-        updateUi();
+        startGame(playerIds);
     };
 
-    function Game(players) {
+    cmds.quiz_stop= function(params) {
+        stopGame();
+    };
 
+    var Game= function(playerIds) {
 
+        var getPlayerIds= function() {
+            return playerIds;
+        };
+
+        var getPlayers= function() {
+            var result= {};
+            for (var i in playerIds) {
+                result[playerIds[i]]= users.getById(playerIds[i]);
+            }
+            return result;
+        };
+
+        // this.getPlayerIds= getPlayerIds;
+        this.getPlayers= getPlayers;
         return this;
     };
+
+    var startGame= function(playerIds) {
+        $('body').addClass('game-running');
+        game= new Game(playerIds);
+        users.setGame(game);
+    };
+
+    var stopGame= function() {
+        $('body').removeClass('game-running');
+        game= null;
+        users.setGame(game);
+    };
+    
 
     function updateUi() {
 //        if (game) {

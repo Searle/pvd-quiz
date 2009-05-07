@@ -362,12 +362,17 @@ jQuery(function($) {
         stopGame();
     };
 
+    var showPage= function(name) {
+        $('body').removeClass('show-overview').removeClass('show-quiz')
+            .addClass('show-' + name);
+    };
+
     cmds.page_overview= function(params) {
-        $('body').removeClass('show-quiz').addClass('show-overview');
+        showPage('overview');
     };
 
     cmds.page_quiz= function(params) {
-        $('body').removeClass('show-overview').addClass('show-quiz');
+        if (game) showPage('quiz');
     };
 
     // ========================================================================
@@ -376,12 +381,15 @@ jQuery(function($) {
 
     var startGame= function(playerIds) {
         $('body').addClass('game-running');
+        $('#tab-quiz').removeClass('disabled');
         game= new Game(playerIds);
         users.setGame(game);
+        showPage('quiz');
     };
 
     var stopGame= function() {
         $('body').removeClass('game-running');
+        $('#tab-quiz').addClass('disabled');
         game= null;
         users.setGame(game);
     };

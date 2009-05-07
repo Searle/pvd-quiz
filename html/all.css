@@ -131,11 +131,15 @@ body.show-quiz     .tab.show-quiz {
     margin: 0px auto;
 }
 
-#head .tabs {
+/* ============================================================================
+//      tabs
+// ============================================================================ */
+
+.tabs {
     padding: 0 20px;
 }
 
-#head .tab {
+.tabs .tab {
     position: relative;
     border-top: 1px solid black;
     background-color: #DEB476;
@@ -150,7 +154,15 @@ body.show-quiz     .tab.show-quiz {
     border-radius-topleft: 10px;
 }
 
-#head .tab a {
+.tabs .tab.disabled {
+    background-color: #CCC;
+}
+
+.tabs .tab.disabled a {
+    color: #888;
+}
+
+.tabs .tab a {
     background: transparent;
     margin: 0;
     padding: 0;
@@ -158,7 +170,7 @@ body.show-quiz     .tab.show-quiz {
 }
 
 /* unused:
-#head .tab.active {
+.tabs .tab.active {
     background-image: url(bg.png);
 }
 */

@@ -21,6 +21,26 @@ body {
     x-padding-bottom: 1px;
 }
 
+a {
+    border: 1px solid #462F39;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 3px 10px;
+    text-decoration: none;
+    background-color: #FFF;
+    color: #000;
+    display: inline-block;
+}
+
+a:hover {
+    background-color: #EEF;
+}
+
+a.big {
+    font-size: 150%;
+}
+
 #head {
     background-color: #462F39;
     color: #FFF;

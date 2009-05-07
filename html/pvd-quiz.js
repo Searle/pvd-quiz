@@ -71,6 +71,18 @@ jQuery(function($) {
         return this;
     };
 
+    var Qs= function() {
+
+        var getQ= function(q_i) {
+            return new Q(q_i);
+        };
+
+        // Public methods
+        this.getQ= getQ;
+        return this;
+    }
+
+
     // ========================================================================
     //   Db Class
     // ========================================================================
@@ -242,13 +254,12 @@ jQuery(function($) {
     //   MAIN
     // ========================================================================
 
-    var qid= "1169";
-
     var db= new Db();
-
     var users= new Users(db);
+    var qs= new Qs();
 
-    var q= new Q(qid);
+    var qid= "1169";
+    var q= qs.getQ(qid);
     var entry_n= 1;
 
     var nextA= function() {

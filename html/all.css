@@ -223,7 +223,7 @@ body.show-quiz     .tab.show-quiz {
 }
 
 .qcontent {
-    padding: 10px;
+    x-padding: 10px;
     font-size: 150%;
 }
 
@@ -234,6 +234,20 @@ body.show-quiz     .tab.show-quiz {
 .qtype-nav.active {
     color: #841815;
     padding-right: 10px;
+}
+
+.qactions .title {
+    border-bottom: 1px dotted #888;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.qactions .skip {
+    float: right;
+}
+
+.qactions .actions {
+    x-font-size: 125%;
 }
 
 /* ============================================================================

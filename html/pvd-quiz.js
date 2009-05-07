@@ -11,11 +11,12 @@ jQuery(function($) {
             return quiz[qid].length;
         };
 
-        var asHtml= function(qtype, qauthor, qcontent) {
+        var asHtml= function(qtype, qauthor, qcontent, qactions) {
             return '<div class="qentry">'
                 +   '<div class="qtype"><div class="qtype-i">' + qtype + '</div></div>'
                 +   '<div class="qauthor">' + qauthor + '</div>'
                 +   '<div class="qcontent">' + qcontent + '</div>'
+                +   '<div class="qactions">' + (qactions ? qactions : '') + '</div>'
                 + '</div>';
         };
 
@@ -49,7 +50,7 @@ jQuery(function($) {
             return asHtml(qentry[0], qentry[1], qentry[2]);
         };
 
-        var getAnswerHtml= function(qentry_i) {
+        var getAnswerHtml= function(game, qentry_i) {
             var entries= getEntries();
             var navHtml= [];
             for (var i= 0; i < entries.length; i++) {
@@ -57,9 +58,24 @@ jQuery(function($) {
                 var class_= i == qentry_i ? 'active' : 'other';
                 navHtml.push('<span class="qtype-nav ', class_, '">', qentry[0], '</span>');
             }
+            navHtml= navHtml.join('');
+            var actionHtml= [ '<div class="title">Wer hat\'s gewu&szlig;t?</div>',
+                '<div class="actions">',
+                '<div class="skip"><a class="big" href="#q_solved:qid=', qid, ':uid=0">Frage&nbsp;&uuml;berspringen</a></div>' ];
+            if (game) {
+                var players= game.getPlayers();
+                for (var i in players) {
+                    var user= players[i];
+                    actionHtml.push(' <a class="big" href="#q_solved:qid=', qid, ':uid=', user.user_id, '">', user.name, '</a>');
+                }
+            }
+            actionHtml.push('</div>');
+            actionHtml= actionHtml.join('');
+            if (qentry_i == 0) {
+                return asHtml(navHtml, '&nbsp;', '<p>Viel Spa&szlig; beim Raten!</p><p>Mit "Leerzeichen"-Taste geht\'s zum n&auml;chsten Tip / Antwort!</p>', actionHtml);
+            }
             var qentry= entries[qentry_i];
-            if (qentry_i == 0) qentry[1]= qentry[2]= '&nbsp;';
-            return asHtml(navHtml.join(''), qentry[1], qentry[2]);
+            return asHtml(navHtml, qentry[1], qentry[2], actionHtml);
         };
 
         // Public methods
@@ -407,7 +423,7 @@ jQuery(function($) {
 
     var nextA= function() {
         entry_n= entry_n >= q.getEntryCount() - 1 ? 0 : entry_n + 1;
-        $('#qentrya').html(q.getAnswerHtml(entry_n));
+        $('#qentrya').html(q.getAnswerHtml(game, entry_n));
     };
 
     $(document)

@@ -292,8 +292,13 @@ jQuery(function($) {
             return qid;
         };
 
-        var getQ= function() {
-            return q;
+        var nextA= function() {
+            answer_i= answer_i >= q.getEntryCount() - 1 ? 0 : answer_i + 1;
+            return answer_i;
+        };
+
+        var getA= function() {
+            return answer_i;
         };
 
         var nextQ= function() {
@@ -308,16 +313,12 @@ jQuery(function($) {
                 q= new Q(qid);
             }
             answer_i= -1;
+            nextA();
             return q;
         };
 
-        var nextA= function() {
-            answer_i= answer_i >= q.getEntryCount() - 1 ? 0 : answer_i + 1;
-            return answer_i;
-        };
-
-        var getA= function() {
-            return answer_i;
+        var getQ= function() {
+            return q;
         };
 
         var getQCount= function() {
@@ -325,7 +326,6 @@ jQuery(function($) {
         };
 
         nextQ();
-        nextA();
 
         // this.getPlayerIds= getPlayerIds;
         this.getPlayers= getPlayers;
@@ -457,6 +457,13 @@ jQuery(function($) {
 
     cmds.page_quiz= function(params) {
         if (game) showPage('quiz');
+    };
+
+    cmds.q_solved= function(params) {
+        if (params.uid) {
+        }
+        game.nextQ();
+        updateQuizUi();
     };
 
     // ========================================================================

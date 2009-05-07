@@ -62,4 +62,7 @@ for (split(/\n/, "$data\n")) {
 
 use JSON::XS;
 
-print "var quiz=" . encode_json(\%q) . ";";
+$json= encode_json(\%q);
+$json =~ s/(\"\d+[A-H]?\":)/\n$1/g;
+
+print "var quiz=$json;";

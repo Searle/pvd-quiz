@@ -126,8 +126,21 @@ jQuery(function($) {
         db.execute('CREATE TABLE IF NOT EXISTS solved ('
             + '  user_id INTEGER, qid TEXT'
             + ')');
-        db.execute('CREATE VIEW IF NOT EXISTS user AS'
-            + '  SELECT *, (SELECT COUNT(*) FROM solved WHERE solved.user_id = user_data.user_id) AS solved_count FROM user_data'
+
+        // Make DB repair by creating new view
+        // Have to use a catch clause until I'm online...
+        try {
+            db.execute('DROP VIEW user');
+        }
+        catch(e) {}
+
+        // The DISTINCT thingy 'solved_d' is somewhat stupid, but it fixes a bug in a previous version, where multiple
+        // identical entries in the solved table could occur.
+        db.execute('CREATE VIEW user AS'
+            + '  SELECT *, (SELECT COUNT(*) FROM ('
+            + '      SELECT DISTINCT qid, user_id FROM solved'
+            + '    ) AS solved_d WHERE solved_d.user_id = user_data.user_id'
+            + '  ) AS solved_count FROM user_data'
             + '');
 
         var arguments2array= function(args, skip) {
@@ -170,6 +183,11 @@ jQuery(function($) {
                 execute("INSERT INTO q (qid) VALUES(?)", qid);
             }
         }
+
+        // Clean up "solved" table in case questions changed
+        db.execute('DELETE FROM solved WHERE qid NOT IN ('
+            + '  SELECT qid FROM q'
+            + ')');
 
         // Public methods
         this.fetch= fetch;
@@ -220,6 +238,10 @@ jQuery(function($) {
         };
 
         var setSolved= function(user_id, qid) {
+            if (db.fetchOne('SELECT EXISTS(SELECT * FROM solved WHERE user_id = ? AND qid = ?) AS e', user_id, qid).e) {
+                console.warn("Catched bug, already marked as 'solved' for user");
+                return;
+            }
             db.execute('INSERT INTO solved (user_id, qid) VALUES (?, ?)', user_id, qid);
         };
 
@@ -338,7 +360,7 @@ jQuery(function($) {
         };
 
         var getQCount= function() {
-            return qids.length;
+            return qids.length + 1;
         };
 
         nextQ();

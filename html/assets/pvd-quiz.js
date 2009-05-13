@@ -65,6 +65,8 @@ jQuery(function($) {
 
         var getAnswerHtml= function(game, qentry_i) {
             var entries= getEntries();
+            var isLastEntry= qentry_i >= entries.length - 1;
+
             var navHtml= [];
             for (var i= 0; i < entries.length; i++) {
                 var qentry= entries[i];
@@ -72,24 +74,31 @@ jQuery(function($) {
                 navHtml.push('<span class="qtype-nav ', class_, '">', qentry[0], '</span>');
             }
             navHtml= navHtml.join('');
-            var actionHtml= [ '<div class="title">Wer hat\'s gewu&szlig;t?</div>',
+
+            var actionHtml= [
+                (isLastEntry ? '<div class="title">Wer hat\'s gewu&szlig;t?</div>' : '<div class="title">&nbsp;</div>' ),
                 '<div class="actions">',
-                '<div class="skip"><a class="button big" href="#q_solved:qid=', qid, ':uid=0">Frage&nbsp;&uuml;berspringen</a></div>' ];
-            if (game) {
+                '<div class="skip"><a class="button big" href="#q_solved:qid=', qid, ':uid=0">Frage&nbsp;&uuml;berspringen</a></div>'
+            ];
+            if (isLastEntry && game) {
                 var players= game.getPlayers();
                 for (var i in players) {
                     var user= players[i];
                     actionHtml.push(' <a class="button big" href="#q_solved:qid=', qid, ':uid=', user.user_id, '">', user.name, '</a>');
                 }
             }
+            else {
+                actionHtml.push('<a class="button big" href="#q_skip">N&auml;chste Antwort / n&auml;chster Tipp</a>');
+            }
             actionHtml.push('</div>');
             actionHtml= actionHtml.join('');
+
             if (qentry_i == 0) {
-                return asHtml(navHtml, '&nbsp;', '<p>Viel Spa&szlig; beim Raten!</p><p>Mit "Leerzeichen"-Taste geht\'s zum n&auml;chsten Tip bzw. zur n&auml;chsten Antwort!</p>', actionHtml);
+                return asHtml(navHtml, '&nbsp;', '<p>Viel Spa&szlig; beim Raten!</p><p>Mit "Leerzeichen"-Taste geht\'s zum n&auml;chsten Tipp bzw. zur n&auml;chsten Antwort!</p>', actionHtml);
             }
             var qentries= [];
             for (var i= 0; i < qentry_i; i++) qentries.push(entries[i + 1]);
-            return listAsHtml(navHtml, qentries, actionHtml, qentry_i >= entries.length - 1);
+            return listAsHtml(navHtml, qentries, actionHtml, isLastEntry);
         };
 
         // Public methods
@@ -336,7 +345,7 @@ jQuery(function($) {
 
         var nextA= function() {
             if (q == null) return 0;
-            answer_i= answer_i >= q.getEntryCount() - 1 ? 0 : answer_i + 1;
+            if (answer_i < q.getEntryCount()) answer_i++;
             return answer_i;
         };
 
@@ -411,8 +420,7 @@ jQuery(function($) {
             params[key]= paramsl.shift();
         }
 
-        cmdFn(params);
-        return false;
+        return cmdFn(params);
     });
 
     $('.checkbox-inside').live('click', function(ev) {
@@ -510,6 +518,11 @@ jQuery(function($) {
         updateQuizUi();
     };
 
+    cmds.q_skip= function(params) {
+        game.nextA();
+        updateQuizUi();
+    };
+
     // ========================================================================
     //   MAIN
     // ========================================================================
@@ -555,11 +568,5 @@ jQuery(function($) {
 
     $('.quiz-count').html(qs.getCount());
 
-    $(document)
-        .bind('keydown', 'space', function(evt) {
-            game.nextA();
-            updateQuizUi();
-            return false; // don't bubble
-        })
-    ;
+    $(document).bind('keydown', 'space', cmds.q_skip);
 });

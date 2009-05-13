@@ -44,8 +44,8 @@ a.button {
     border: 1px solid #462F39;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    border-radius: 5px;
     padding: 3px 10px;
+    border-radius: 5px;
     text-decoration: none;
     background-color: #FFF;
     color: #000;

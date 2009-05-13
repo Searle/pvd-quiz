@@ -40,7 +40,7 @@ body {
 //      Links
 // ============================================================================ */
 
-a {
+a.button {
     border: 1px solid #462F39;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -52,21 +52,21 @@ a {
     display: inline-block;
 }
 
-a:hover {
+a.button:hover {
     background-color: #EEF;
 }
 
-a.big {
+a.button.big {
     font-size: 140%;
 }
 
-a.disabled {
+a.button.disabled {
     border-color: #888;
     color: #888;
     background-color: #CCC;
 }
 
-a.disabled:hover {
+a.button.disabled:hover {
     background-color: #CCC;
 }
 
@@ -161,9 +161,8 @@ body.show-quiz     .tab.show-quiz {
 
 .tabs .tab a {
     background: transparent;
-    margin: 0;
-    padding: 0;
-    border: 0;
+    text-decoration: none;
+    color: #000;
 }
 
 /* unused:
@@ -223,6 +222,10 @@ body.show-quiz     .tab.show-quiz {
     font-size: 140%;
 }
 
+.qauthor.hilight, .qcontent.hilight {
+    color: #841815;
+}
+
 .qcontent .li {
     display: list-item;
     list-style-type: square;
@@ -249,11 +252,19 @@ body.show-quiz     .tab.show-quiz {
 }
 
 /* ============================================================================
-//      Unsorted
+//      Misc.
 // ============================================================================ */
 
 #score {
     float: right;
+}
+
+#copyright {
+    text-align: right;
+}
+
+#copyright a {
+    color: #000;
 }
 
 /* ============================================================================

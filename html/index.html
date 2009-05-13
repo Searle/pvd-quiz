@@ -36,16 +36,22 @@
                 <h1>Spieler</h1>
                 <div class="game-stopped">
                     Neu: <input id="new-user-name" />
-                    <a href="#user_add:input=new-user-name">Hinzuf&uuml;gen</a>
+                    <a class="button" href="#user_add:input=new-user-name">Hinzuf&uuml;gen</a>
                 </div>
                 <div id="users"></div>
                 <div class="game-stopped">
-                    <a class="big" href="#quiz_start">Los geht's!</a>
+                    <a class="button big" href="#quiz_start">Los geht's!</a>
                     <p>Das gestartete Quiz enth&auml;lt alle Fragen, die noch kein Mitspieler gel&ouml;st hat!</p>
                 </div>
                 <div class="game-running">
-                    <a class="big" href="#quiz_stop">Spiel beenden!</a>
+                    <a class="button big" href="#quiz_stop">Spiel beenden!</a>
                 </div>
+            </div>
+            <div id="copyright">
+                (c) 2009 by Dietrich Raisin. Download hier:
+                <a target="_blank" href="http://github.com/Searle/pvd-quiz/tree/master">
+                    http://github.com/Searle/pvd-quiz/tree/master
+                </a>
             </div>
         </div>
         <div class="page show-quiz" id="page-quiz">

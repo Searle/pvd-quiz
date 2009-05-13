@@ -11,14 +11,16 @@ jQuery(function($) {
             return quiz[qid].length;
         };
 
-        var listAsHtml= function(qtype, qentries, qactions) {
+        var listAsHtml= function(qtype, qentries, qactions, hilightLast) {
             var content= [];
-            $.map(qentries, function(qentry) {
+
+            for (var i= 0; i < qentries.length; i++) {
+                var class_= (hilightLast && i == qentries.length - 1) ? ' hilight' : '';
                 content.push(
-                    '<div class="qauthor">', qentry[1], '</div>',
-                    '<div class="qcontent">', qentry[2], '</div>'
+                    '<div class="qauthor' + class_ + '">',  qentries[i][1], '</div>',
+                    '<div class="qcontent' + class_ + '">', qentries[i][2], '</div>'
                 );
-            });
+            }
             return '<div class="qentry">'
                 +   '<div class="qtype"><div class="qtype-i">' + qtype + '</div></div>'
                 +   content.join('')
@@ -27,7 +29,7 @@ jQuery(function($) {
         };
 
         var asHtml= function(qtype, qauthor, qcontent, qactions) {
-            return listAsHtml(qtype, [[ undefined, qauthor, qcontent ]], qactions);
+            return listAsHtml(qtype, [[ '', qauthor, qcontent ]], qactions, false);
         };
 
         var getEntry= function(qentry_i) {
@@ -40,7 +42,7 @@ jQuery(function($) {
                 var qpart=     qparts[qpart_i];
                 var qptype=    qpart[0];
                 var qpcontent= qpart[1];
-                qpcontent= qpcontent.replace(/\b(http:\/\/\S+)/, '<a target="_blank" href="$1">$1</a>');
+                qpcontent= qpcontent.replace(/\b(http:\/\/\S+)/, '<a class="button" target="_blank" href="$1">$1</a>');
                 var class_= '';
                 if (qptype == '-') class_= ' class="li"';
                 qcontent.push('<p', class_, '>', qpcontent, '</p>'); 
@@ -72,12 +74,12 @@ jQuery(function($) {
             navHtml= navHtml.join('');
             var actionHtml= [ '<div class="title">Wer hat\'s gewu&szlig;t?</div>',
                 '<div class="actions">',
-                '<div class="skip"><a class="big" href="#q_solved:qid=', qid, ':uid=0">Frage&nbsp;&uuml;berspringen</a></div>' ];
+                '<div class="skip"><a class="button big" href="#q_solved:qid=', qid, ':uid=0">Frage&nbsp;&uuml;berspringen</a></div>' ];
             if (game) {
                 var players= game.getPlayers();
                 for (var i in players) {
                     var user= players[i];
-                    actionHtml.push(' <a class="big" href="#q_solved:qid=', qid, ':uid=', user.user_id, '">', user.name, '</a>');
+                    actionHtml.push(' <a class="button big" href="#q_solved:qid=', qid, ':uid=', user.user_id, '">', user.name, '</a>');
                 }
             }
             actionHtml.push('</div>');
@@ -87,7 +89,7 @@ jQuery(function($) {
             }
             var qentries= [];
             for (var i= 0; i < qentry_i; i++) qentries.push(entries[i + 1]);
-            return listAsHtml(navHtml, qentries, actionHtml);
+            return listAsHtml(navHtml, qentries, actionHtml, qentry_i >= entries.length - 1);
         };
 
         // Public methods
@@ -276,7 +278,7 @@ jQuery(function($) {
                 if (game) {
                     if (!players[user.user_id]) continue;
                     cb_attr=  ' disabled="true" checked="true"';
-                    a_class=  'disabled';
+                    a_class=  ' disabled';
                     tr_class= 'hilight';
                 }
                 html.push('<tr class="' + tr_class + '">',
@@ -284,7 +286,7 @@ jQuery(function($) {
                     '<td>', user.name, '</td>',
                     '<td>', user.solved_count, '</td>',
                     '<td>', Math.floor(1000 * user.solved_count / qs.getCount()) / 10, '%</td>',
-                    '<td><a class="' + a_class + '" href="#user_remove:id=', user.user_id, ':kcount=', user.solved_count, '">L&ouml;schen</a></td>',
+                    '<td><a class="button' + a_class + '" href="#user_remove:id=', user.user_id, ':kcount=', user.solved_count, '">L&ouml;schen</a></td>',
                     '</tr>');
             }
             $('#users').html('<table class="std">' + html.join('') + '</table>');

@@ -106,16 +106,16 @@ Woran starb Zola im Fall Zola laut der damaligen Presse?
 
 #=======================================================================
 #Q193B Pop'Moonshine
-Wie würde der Befund korrekter lauten?(Van Dusen verbessert Hatch, als er aus der Zeitung
+Wie würde im Fall Zola der Befund korrekter lauten? (Van Dusen verbessert Hatch, als er aus der Zeitung
 vorliest)
 
 #=======================================================================
 #Q193C Pop'Moonshine
-Was sind die gewöhnlichen Anzeichen für solch eine Todesursache?
+Was sind im Fall Zola die gewöhnlichen Anzeichen für die Todesursache?
 
 #=======================================================================
 #Q193D Pop'Moonshine
-Wie hieß der Arzt, der den Totenschein geschrieben hat?
+Wie hieß im Fall Zola der Arzt, der den Totenschein geschrieben hat?
 
 #-----------------------------------------------------------------------
 #A160 miesegestalt

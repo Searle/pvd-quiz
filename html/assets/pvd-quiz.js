@@ -38,7 +38,7 @@ jQuery(function($) {
             var qauthor= qentry[1];
             var qparts=  qentry[2];
             var qcontent= [];
-            for (qpart_i in qparts) {
+            for (var qpart_i in qparts) {
                 var qpart=     qparts[qpart_i];
                 var qptype=    qpart[0];
                 var qpcontent= qpart[1];
@@ -105,8 +105,6 @@ jQuery(function($) {
         this.getEntryCount= getEntryCount;
         this.getEntryHtml= getEntryHtml;
         this.getAnswerHtml= getAnswerHtml;
-        // this.asHtml= asHtml;
-        // this.getEntries= getEntries;
         return this;
     };
 

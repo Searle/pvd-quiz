@@ -11,13 +11,23 @@ jQuery(function($) {
             return quiz[qid].length;
         };
 
-        var asHtml= function(qtype, qauthor, qcontent, qactions) {
+        var listAsHtml= function(qtype, qentries, qactions) {
+            var content= [];
+            $.map(qentries, function(qentry) {
+                content.push(
+                    '<div class="qauthor">', qentry[1], '</div>',
+                    '<div class="qcontent">', qentry[2], '</div>'
+                );
+            });
             return '<div class="qentry">'
                 +   '<div class="qtype"><div class="qtype-i">' + qtype + '</div></div>'
-                +   '<div class="qauthor">' + qauthor + '</div>'
-                +   '<div class="qcontent">' + qcontent + '</div>'
+                +   content.join('')
                 +   '<div class="qactions">' + (qactions ? qactions : '') + '</div>'
                 + '</div>';
+        };
+
+        var asHtml= function(qtype, qauthor, qcontent, qactions) {
+            return listAsHtml(qtype, [[ undefined, qauthor, qcontent ]], qactions);
         };
 
         var getEntry= function(qentry_i) {
@@ -75,8 +85,9 @@ jQuery(function($) {
             if (qentry_i == 0) {
                 return asHtml(navHtml, '&nbsp;', '<p>Viel Spa&szlig; beim Raten!</p><p>Mit "Leerzeichen"-Taste geht\'s zum n&auml;chsten Tip bzw. zur n&auml;chsten Antwort!</p>', actionHtml);
             }
-            var qentry= entries[qentry_i];
-            return asHtml(navHtml, qentry[1], qentry[2], actionHtml);
+            var qentries= [];
+            for (var i= 0; i < qentry_i; i++) qentries.push(entries[i + 1]);
+            return listAsHtml(navHtml, qentries, actionHtml);
         };
 
         // Public methods
@@ -305,10 +316,6 @@ jQuery(function($) {
         var answer_i;
         var players;
 
-//        var getPlayerIds= function() {
-//            return playerIds;
-//        };
-
         players= [];
         for (var i in playerIds) {
             var player= users.getById(playerIds[i]);
@@ -323,10 +330,6 @@ jQuery(function($) {
 
         var getPlayers= function() {
             return players;
-        };
-
-        var getQid= function() {
-            return qid;
         };
 
         var nextA= function() {
@@ -365,20 +368,18 @@ jQuery(function($) {
 
         nextQ();
 
-        // this.getPlayerIds= getPlayerIds;
         this.getPlayers= getPlayers;
         this.getQ= getQ;
         this.getA= getA;
         this.nextQ= nextQ;
         this.nextA= nextA;
-        // this.getQid= getQid;
         this.getQCount= getQCount;
         this.setSolved= setSolved;
         return this;
     };
 
     // ========================================================================
-    //   DOM Events handler
+    //   DOM Event handlers
     // ========================================================================
 
     var cmds= {};
@@ -437,6 +438,11 @@ jQuery(function($) {
             + "!");
     };
 
+    var showPage= function(name) {
+        $('body').removeClass('show-overview').removeClass('show-quiz')
+            .addClass('show-' + name);
+    };
+
     // ========================================================================
     //   Click Events
     // ========================================================================
@@ -483,11 +489,6 @@ jQuery(function($) {
 
     cmds.quiz_stop= function(params) {
         stopGame();
-    };
-
-    var showPage= function(name) {
-        $('body').removeClass('show-overview').removeClass('show-quiz')
-            .addClass('show-' + name);
     };
 
     cmds.page_overview= function(params) {
